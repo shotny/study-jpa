@@ -10,7 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 @Service
-@Transactional // 데이터 변경 로직은 트랜잭션 안에서 관리돼야함
+@Transactional(readOnly = true) // 데이터 변경 로직은 트랜잭션 안에서 관리돼야함
 @RequiredArgsConstructor
 public class MemberService {
 
@@ -24,7 +24,6 @@ public class MemberService {
     }
 
     private void validateDuplicateMember(Member member) {
-        // EXCEPTION
         List<Member> findMembers = memberRepository.findByName(member.getName());
         if (!findMembers.isEmpty()) {
             throw new IllegalStateException("이미 존재하는 회원입니다.");
@@ -32,12 +31,10 @@ public class MemberService {
     }
 
     // 조회 등 읽기에서는 가급적 readOnly = true 옵션 사용.(읽기 외에 사용하면 데이터변경 안됨) 성능관련
-    @Transactional(readOnly = true)
     public List<Member> findMembers() {
         return memberRepository.findAll();
     }
 
-    @Transactional(readOnly = true)
     public Member findMember(Long memberId) {
         return memberRepository.findOne(memberId);
     }
