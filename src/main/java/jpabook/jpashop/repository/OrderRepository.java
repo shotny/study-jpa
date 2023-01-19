@@ -103,4 +103,7 @@ public class OrderRepository {
         TypedQuery<Order> query = em.createQuery(cq).setMaxResults(100);
         return query.getResultList();
     }
+
+//    public List<Order> findAll(OrderSearch orderSearch) {
+//    }
 }
