@@ -55,7 +55,7 @@ public class OrderServiceTest {
         Long orderId = orderService.order(member.getId(), item.getId(), orderCount);
 
         //when
-        orderService.cancel(orderId);
+        orderService.cancelOrder(orderId);
 
         //then
         Order getOrder = orderRepository.findOne(orderId);

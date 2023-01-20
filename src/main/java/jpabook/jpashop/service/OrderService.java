@@ -51,16 +51,17 @@ public class OrderService {
         // order에서만 delivery와 orderItem을 관리하고 다른 곳에서는 사용하지 않고있음 & persist해야하는 라이프사이클이 완전히 동일
     }
 
-    //주문취소
-    public void cancel(Long orderId) {
+    @Transactional
+    public void cancelOrder(Long orderId) {
         //주문 엔티티 조회
         Order order = orderRepository.findOne(orderId);
         //주문 취소
         order.cancel();
     }
 
-    //주문검색
+    //검색
     public List<Order> findOrders(OrderSearch orderSearch) {
-        return orderRepository.findAllByCriteria(orderSearch);
+        return orderRepository.findAllByString(orderSearch);
     }
 }
+
